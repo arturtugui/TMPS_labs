@@ -1,3 +1,5 @@
+package Point;
+
 import BehaviorInterfaces.Movable;
 
 public class Point implements Movable {
@@ -33,5 +35,20 @@ public class Point implements Movable {
 
     public double distanceTo(Point other) {
         return Math.sqrt(Math.pow(getX() - other.getX(), 2) + Math.pow(getY() - other.getY(), 2));
+    }
+
+    public Point rotateAroundCenter(Point center, double angleRadians) {
+        // Translate point to origin (relative to center)
+        double dx = this.x - center.getX();
+        double dy = this.y - center.getY();
+
+        // Apply rotation matrix
+        double cos = Math.cos(angleRadians);
+        double sin = Math.sin(angleRadians);
+        double newX = dx * cos - dy * sin;
+        double newY = dx * sin + dy * cos;
+
+        // Translate back to original position and return new point
+        return new Point(center.getX() + newX, center.getY() + newY);
     }
 }

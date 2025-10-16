@@ -1,10 +1,12 @@
 package Shapes;
 
 import BaseConceptInterfaces.Shape;
+import BehaviorInterfaces.Movable;
+import BehaviorInterfaces.Rotatable;
+import BehaviorInterfaces.Scalable;
+import Point.Point;
 
-import java.awt.*;
-
-public class Rectangle implements Shape {
+public class Rectangle implements Shape, Movable, Scalable, Rotatable {
     private Point topLeft;
     private Point bottomRight;
 
@@ -30,11 +32,11 @@ public class Rectangle implements Shape {
     }
 
     public double getLength() {
-        return topLeft.getX() - bottomRight.getX();
+        return Math.abs(bottomRight.getX() - topLeft.getX());
     }
 
     public double getWidth() {
-        return topLeft.getY() - bottomRight.getY();
+        return Math.abs(bottomRight.getY() - topLeft.getY());
     }
 
     @Override
@@ -45,5 +47,38 @@ public class Rectangle implements Shape {
     @Override
     public double getArea() {
         return this.getLength() * this.getWidth();
+    }
+
+    @Override
+    public void move(double x, double y) {
+        this.topLeft.move(x, y);
+        this.bottomRight.move(x, y);
+    }
+
+    public Point getCenter() {
+        double x = topLeft.getX() + getLength() / 2;
+        double y = topLeft.getY() - getWidth() / 2;
+        return new Point(x, y);
+    }
+
+    @Override
+    public void scale(double scale) {
+        // scaling
+        Point center = this.getCenter();
+        double lengthBy2 = this.getLength() / 2;
+        double widthBy2 = this.getWidth() / 2;
+        setTopLeft(new Point(center.getX() - scale * lengthBy2, center.getY() + scale * widthBy2));
+        setBottomRight(new Point(center.getX() + scale * lengthBy2, center.getY() - scale * widthBy2));
+    }
+
+    @Override
+    public void rotate(double angleRadians) {
+        Point center = getCenter();
+
+        // Rotate topLeft corner around center
+        this.topLeft = topLeft.rotateAroundCenter(center, angleRadians);
+
+        // Rotate bottomRight corner around center
+        this.bottomRight = bottomRight.rotateAroundCenter(center, angleRadians);
     }
 }

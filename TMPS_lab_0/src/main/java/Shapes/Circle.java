@@ -1,10 +1,11 @@
 package Shapes;
 
 import BaseConceptInterfaces.Shape;
+import BehaviorInterfaces.Movable;
+import BehaviorInterfaces.Scalable;
+import Point.Point;
 
-import java.awt.*;
-
-public class Circle implements Shape {
+public class Circle implements Shape, Movable, Scalable {
     private Point center;
     private double radius;
 
@@ -37,5 +38,16 @@ public class Circle implements Shape {
     @Override
     public double getArea() {
         return (double) (Math.PI * Math.pow(getRadius(), 2));
+    }
+
+    @Override
+    public void move(double dx, double dy) {
+        setCenter(new Point(center.getX() + dx, center.getY() + dy));
+    }
+
+    @Override
+    public void scale(double s) {
+        // scaling from the center
+        setRadius(radius * s);
     }
 }
