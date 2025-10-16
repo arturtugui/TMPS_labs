@@ -32,17 +32,17 @@ public class Circle implements Shape, Movable, Scalable {
 
     @Override
     public double getPerimeter() {
-        return (double) (2 * Math.PI * getRadius());
+        return 2 * Math.PI * getRadius();
     }
 
     @Override
     public double getArea() {
-        return (double) (Math.PI * Math.pow(getRadius(), 2));
+        return Math.PI * Math.pow(getRadius(), 2);
     }
 
     @Override
     public void move(double dx, double dy) {
-        setCenter(new Point(center.getX() + dx, center.getY() + dy));
+        center.move(dx, dy);  // Use Point's move method
     }
 
     @Override

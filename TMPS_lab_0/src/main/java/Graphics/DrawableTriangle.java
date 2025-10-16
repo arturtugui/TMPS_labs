@@ -19,8 +19,6 @@ public class DrawableTriangle implements Drawable {
                 ", " + String.format("%.2f", triangle.getB().getY()) + ")");
         System.out.println("  Point C: (" + String.format("%.2f", triangle.getC().getX()) +
                 ", " + String.format("%.2f", triangle.getC().getY()) + ")");
-        System.out.println("  Area: " + String.format("%.2f", triangle.getArea()));
-        System.out.println("  Perimeter: " + String.format("%.2f", triangle.getPerimeter()));
     }
 
     public Triangle getTriangle() {

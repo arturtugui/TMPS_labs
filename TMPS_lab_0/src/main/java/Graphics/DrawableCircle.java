@@ -4,10 +4,10 @@ import BehaviorInterfaces.Drawable;
 import Shapes.Circle;
 
 public class DrawableCircle implements Drawable {
-    private Circle circle;
+    private Circle circle; // here it kind of violates DIP, it should been a interface
 
     public DrawableCircle(Circle circle) {
-        this.circle = circle;
+        this.circle = circle; // aggregation
     }
 
     @Override
