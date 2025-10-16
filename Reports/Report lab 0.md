@@ -16,7 +16,6 @@ Implement 3 SOLID letters in a simple project
 1. [Definitions](#definitions)
 2. [What Was Implemented](#what-was-implemented)
 3. [Code Examples](#code-examples)
-4. [Conclusion](#conclusion)
 
 ---
 
