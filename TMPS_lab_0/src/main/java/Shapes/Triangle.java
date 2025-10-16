@@ -17,6 +17,30 @@ public class Triangle implements Shape, Movable, Scalable, Rotatable {
         this.c = c;
     }
 
+    public Point getA() {
+        return a;
+    }
+
+    public Point getB() {
+        return b;
+    }
+
+    public Point getC() {
+        return c;
+    }
+
+    public void setA(Point a) {
+        this.a = a;
+    }
+
+    public void setB(Point b) {
+        this.b = b;
+    }
+
+    public void setC(Point c) {
+        this.c = c;
+    }
+
     @Override
     public double getPerimeter() {
         return a.distanceTo(b) + b.distanceTo(c) + c.distanceTo(a);
