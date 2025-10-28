@@ -2,21 +2,21 @@ package com.ssintern.domain.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Order {
+    public static final AtomicInteger idCounter = new AtomicInteger(0);
+
     private int id;
     private List<MenuItem> items;
     private OrderType orderType;
     // OPTIONAL
-    private int tableId; // applicable for DINE_IN orders
+    private Integer tableId; // applicable for DINE_IN orders
     private String deliveryAddress; // applicable for DELIVERY orders
 
-    public Order(int id, OrderType orderType) {
-        setId(id);
-        this.items = new ArrayList<MenuItem>();
-        this.orderType = orderType;
-        this.tableId = -1;
-        this.deliveryAddress = null;
+    // No-arg constructor for Builder pattern
+    public Order() {
+        this.items = new ArrayList<>();
     }
 
     public void addItem(MenuItem item) {
@@ -31,10 +31,6 @@ public class Order {
         return total;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public void setId(int id) {
         if (id <= 0) {
             throw new IllegalArgumentException("ID must be positive.");
@@ -42,26 +38,40 @@ public class Order {
         this.id = id;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setItems(List<MenuItem> items) {
+        this.items = items;
+    }
+
     public List<MenuItem> getItems() {
         return items;
+    }
+
+    public void setOrderType(OrderType orderType) {
+        this.orderType = orderType;
     }
 
     public OrderType getOrderType() {
         return orderType;
     }
 
-    public void setTableId(int tableId) {
-        if( orderType != OrderType.DINE_IN) {
-            throw new IllegalStateException("Table ID can only be set for DINE_IN orders.");
-        }
+    public void setTableId(Integer tableId) {
         this.tableId = tableId;
     }
 
+    public Integer getTableId() {
+        return tableId;
+    }
+
     public void setDeliveryAddress(String deliveryAddress) {
-        if( orderType != OrderType.DELIVERY) {
-            throw new IllegalStateException("Delivery address can only be set for DELIVERY orders.");
-        }
         this.deliveryAddress = deliveryAddress;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
     }
 
     @Override

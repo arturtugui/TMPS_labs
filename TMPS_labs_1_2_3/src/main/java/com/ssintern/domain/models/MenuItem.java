@@ -1,13 +1,17 @@
 package com.ssintern.domain.models;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class MenuItem implements Cloneable{
+    public static final AtomicInteger idCounter = new AtomicInteger(0);
+
     private int id;
     private String name;
     private String description;
     private double price;
 
-    public MenuItem(int id, String name, String description, double price) {
-        setId(id);
+    public MenuItem(String name, String description, double price) {
+        setId(idCounter.incrementAndGet());
         this.name = name;
         this.description = description;
         this.price = price;

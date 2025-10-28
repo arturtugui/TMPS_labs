@@ -1,12 +1,16 @@
 package com.ssintern.domain.models;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Table {
+    public static final AtomicInteger idCounter = new AtomicInteger(0);
+
     private int id;
     private int capacity;
     private boolean isOccupied;
 
-    public Table(int id, int capacity) {
-        setId(id);
+    public Table(int capacity) {
+        setId(idCounter.incrementAndGet());
         this.capacity = capacity;
         this.isOccupied = false;
     }
@@ -18,6 +22,7 @@ public class Table {
     public void release() {
         this.isOccupied = false;
     }
+
 
     public int getId() {
         return id;
