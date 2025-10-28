@@ -1,19 +1,27 @@
 package com.ssintern.creational.singleton;
 
-public class Restaurant {
-    private static Restaurant instance;
+import com.ssintern.creational.pool.TablePool;
 
-    public static Restaurant getInstance() {
-        if (instance == null) {
-            instance = new Restaurant();
-        }
-        return instance;
+public class Restaurant {
+    private static final Restaurant instance = new Restaurant();
+
+    private TablePool tablePool;
+    private String menu;
+
+    private Restaurant() { // ← PRIVATE!
+        this.tablePool = new TablePool(5);
+        this.menu = "Sample Menu";
     }
 
+    public static Restaurant getInstance() {
+        return instance; // Always returns same instance
+    }
 
+    public TablePool getTablePool() {
+        return tablePool;
+    }
 
-    public void acquireTable(int id) {
-        System.out.println("Table acquired.");
-        // getTableById(id).occupy();
+    public String getMenu() {
+        return menu;
     }
 }

@@ -2,21 +2,22 @@ package com.ssintern.client;
 
 import com.ssintern.creational.builder.DineInOrderBuilder;
 import com.ssintern.creational.builder.OrderDirector;
-import com.ssintern.creational.pool.TablePool;
+import com.ssintern.creational.singleton.Restaurant;
 import com.ssintern.domain.models.MenuItem;
 import com.ssintern.domain.models.Order;
 import com.ssintern.domain.models.Table;
 
-import static com.ssintern.domain.models.OrderType.DINE_IN;
-
 // TMPS lab 1, unfinished, will showcase all creational design patterns
 public class Demo {
     public static void main(String[] args) {
+        Restaurant restaurant = Restaurant.getInstance();
+        System.out.println("Restaurant Menu: " + restaurant.getMenu());
+
         MenuItem burger = new MenuItem("Burger", "A delicious beef burger", 5.99);
         System.out.println(burger);
+        // Add burger to menu
 
-        TablePool tablePool = new TablePool(5);
-        Table table1 = tablePool.acquireTable();
+        Table table1 = restaurant.getTablePool().acquireTable();
         System.out.println("Acquired Table ID: " + table1.getId());
 
         DineInOrderBuilder dineInOrderBuilder = new DineInOrderBuilder();
@@ -26,10 +27,10 @@ public class Demo {
         dineInOrder.addItem(burger);
         System.out.println(dineInOrder);
 
-        dineInOrder.calculateTotal();
+        System.out.println("Total: " + dineInOrder.calculateTotal());
 
-        tablePool.releaseTable(table1);
-
+        restaurant.getTablePool().releaseTable(table1);
+        System.out.println("Released Table ID: " + table1.getId());
 
     }
 }
