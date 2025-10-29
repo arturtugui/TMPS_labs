@@ -16,7 +16,6 @@ Implement 3 SOLID letters in a simple project
 1. [Definitions](#definitions)
 2. [What Was Implemented](#what-was-implemented)
 3. [Code Examples](#code-examples)
-4. [Conclusion](#conclusion)
 
 ---
 
@@ -240,7 +239,7 @@ manager.addShape(new DrawableTriangle(triangle));
 
 **High-level module (ShapeManager) depends on abstraction (Drawable), not concrete classes.**
 
-**Important Note on DIP:**
+**Important Note on DIP in this implementation:**
 
 While `ShapeManager` correctly depends on the `Drawable` abstraction, the `DrawableCircle`, `DrawableRectangle`, and `DrawableTriangle` classes depend on **concrete** shape classes (`Circle`, `Rectangle`, `Triangle`) rather than the `Shape` interface:
 
