@@ -1,4 +1,4 @@
-# TMPS Laboratory Work #0 - Creational Design Patterns
+# TMPS Laboratory Work #1 - Creational Design Patterns
 
 **Author:** Țugui Artur  
 **Group:** FAF-231
