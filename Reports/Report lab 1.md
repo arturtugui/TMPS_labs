@@ -110,6 +110,11 @@ cheeseburger.addIngredient("Cheddar Cheese");
 cheeseburger.setPrice(9.99);
 ```
 
+
+---
+
+## Conclusions / Screenshots / Results
+
 **Order Output Example:**
 
 ```
