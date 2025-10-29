@@ -71,6 +71,8 @@ public class MenuItem implements Cloneable {
             MenuItem cloned = (MenuItem) super.clone();
             // Deep copy the ingredients list
             cloned.ingredients = new ArrayList<>(this.ingredients);
+            // Generate new unique ID for the cloned item
+            cloned.id = idCounter.incrementAndGet();
             return cloned;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();

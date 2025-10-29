@@ -2,12 +2,20 @@ package com.ssintern.creational.builder;
 
 import com.ssintern.domain.models.Order;
 import com.ssintern.domain.models.OrderType;
+import com.ssintern.domain.models.Table;
 
 public class DineInOrderBuilder implements OrderBuilder {
     private Order order;
+    private Table table;
 
-    public DineInOrderBuilder() {
+    public DineInOrderBuilder(Table table) {
         this.order = new Order();
+        this.table = table;
+        // Note: Table should already be occupied by TablePool.acquireTable()
+        // If not occupied, occupy it now (safety check)
+        if (!table.isOccupied()) {
+            table.occupy();
+        }
     }
 
     @Override
@@ -27,8 +35,7 @@ public class DineInOrderBuilder implements OrderBuilder {
 
     @Override
     public void buildTableId() {
-        order.setTableId(1000); // Placeholder, should be set to actual table ID, by object pool
-        // the occupation of table is handled by Restaurant class
+        order.setTableId(table.getId()); // Use actual table ID from provided table
     }
 
     @Override

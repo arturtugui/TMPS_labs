@@ -78,12 +78,34 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", items=" + items +
-                ", orderType=" + orderType +
-                ", tableId=" + tableId +
-                ", deliveryAddress='" + deliveryAddress + '\'' +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n========== Order #").append(id).append(" ==========\n");
+        sb.append("Type: ").append(orderType).append("\n");
+
+        if (tableId != null) {
+            sb.append("Table: ").append(tableId).append("\n");
+        }
+        if (deliveryAddress != null) {
+            sb.append("Delivery Address: ").append(deliveryAddress).append("\n");
+        }
+
+        sb.append("\nItems:\n");
+        if (items.isEmpty()) {
+            sb.append("  (no items)\n");
+        } else {
+            for (int i = 0; i < items.size(); i++) {
+                MenuItem item = items.get(i);
+                sb.append("  ").append(i + 1).append(". ").append(item.getName())
+                        .append(" - $").append(String.format("%.2f", item.getPrice())).append("\n");
+                sb.append("     ").append(item.getDescription()).append("\n");
+                if (item.getIngredients() != null && !item.getIngredients().isEmpty()) {
+                    sb.append("     Ingredients: ").append(String.join(", ", item.getIngredients())).append("\n");
+                }
+            }
+        }
+
+        sb.append("\nTotal: $").append(String.format("%.2f", calculateTotal())).append("\n");
+        sb.append("================================\n");
+        return sb.toString();
     }
 }
