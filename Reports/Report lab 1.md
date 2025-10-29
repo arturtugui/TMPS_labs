@@ -63,7 +63,7 @@ Table table1 = restaurant.getTablePool().acquireTable();
 restaurant.getTablePool().releaseTable(table1);
 ```
 
-**Order Creation (Builder for Order):**  
+**Builder Pattern (for Order Creation):**  
 _Fits this case because orders can have many optional parameters (table, delivery address, items, etc.). Builder makes it easy to construct orders with only the necessary fields, avoiding large constructors with many parameters or a proliferation of overloaded constructors. Each order type has different requirements:_
 
 - `Order` fields: `id`, `List<MenuItem> items`, `OrderType orderType`, `Integer tableId`, `String deliveryAddress`
