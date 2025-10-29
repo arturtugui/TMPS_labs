@@ -1,4 +1,4 @@
-# TMPS Laboratory Work #0 - SOLID Principles
+# TMPS Laboratory Work #0 - Creational Design Patterns
 
 **Author:** Țugui Artur  
 **Group:** FAF-231
