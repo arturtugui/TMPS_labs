@@ -8,7 +8,7 @@ public class Restaurant {
     private TablePool tablePool;
     private String menu;
 
-    private Restaurant() { // ← PRIVATE!
+    private Restaurant() {
         this.tablePool = new TablePool(5);
         this.menu = "Sample Menu";
     }

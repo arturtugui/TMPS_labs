@@ -3,7 +3,7 @@ package com.ssintern.client;
 import com.ssintern.creational.builder.DineInOrderBuilder;
 import com.ssintern.creational.builder.OrderDirector;
 import com.ssintern.creational.singleton.Restaurant;
-import com.ssintern.domain.models.MenuItem;
+import com.ssintern.creational.builderAlternative.MenuItem;
 import com.ssintern.domain.models.Order;
 import com.ssintern.domain.models.Table;
 
@@ -13,7 +13,15 @@ public class Demo {
         Restaurant restaurant = Restaurant.getInstance();
         System.out.println("Restaurant Menu: " + restaurant.getMenu());
 
-        MenuItem burger = new MenuItem("Burger", "A delicious beef burger", 5.99);
+        MenuItem burger = new MenuItem.MenuItemBuilder()
+                .setName("Burger")
+                .setDescription("A delicious cheeseburger with lettuce, tomato, and cheese.")
+                .setPrice(8.99)
+                .addIngredient("Beef Patty")
+                .addIngredient("Lettuce")
+                .addIngredient("Tomato")
+                .addIngredient("Bun")
+                .build();
         System.out.println(burger);
         // Add burger to menu
 
