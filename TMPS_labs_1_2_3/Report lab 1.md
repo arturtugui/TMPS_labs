@@ -160,3 +160,120 @@ Released Table #1
 Table is now available: true
 
 ```
+
+---
+
+## Refactoring: Builder to Factory Method for Orders
+
+After initial implementation with the Builder pattern for Order creation, the design was refactored to use the **Factory Method pattern** based on professor feedback. This change better fits the use case.
+
+### Why Factory Method is Better for Orders
+
+**Builder Pattern** is ideal for objects with:
+
+- Many optional parameters (10+ fields)
+- Complex configuration steps
+- Same type with different configurations (e.g., MenuItem with varying ingredients)
+
+**Factory Method Pattern** is better for:
+
+- Creating **different types** of objects (DineInOrder, DeliveryOrder, TakeawayOrder)
+- When each type has **unique behavior** and **different fields**
+- When the creation process varies by type but follows a common template
+
+### Implementation Details
+
+**Order Hierarchy:**
+
+```java
+public abstract class Order {
+    private int id;
+    private List<MenuItem> items;
+
+    public abstract String getOrderDetails();
+    protected String formatItems() { /* common formatting */ }
+    public double calculateTotal() { /* common logic */ }
+}
+
+public class DineInOrder extends Order {
+    private Integer tableId;  // Type-specific field
+    // ...
+}
+
+public class DeliveryOrder extends Order {
+    private String deliveryAddress;  // Type-specific field
+    // ...
+}
+
+public class TakeawayOrder extends Order {
+    // No extra fields
+}
+```
+
+**Factory Method with Generics:**
+
+```java
+public abstract class OrderCreator<T> {
+    public static final AtomicInteger idCounter = new AtomicInteger(0);
+
+    public abstract Order createOrder(T params);
+
+    public Order processOrder(T params) {
+        Order order = createOrder(params);
+        order.setId(idCounter.incrementAndGet());
+        return order;
+    }
+}
+
+public class DineInOrderCreator extends OrderCreator<Integer> {
+    @Override
+    public Order createOrder(Integer tableId) {
+        return new DineInOrder(tableId);
+    }
+}
+
+public class DeliveryOrderCreator extends OrderCreator<String> {
+    @Override
+    public Order createOrder(String address) {
+        return new DeliveryOrder(address);
+    }
+}
+
+public class TakeawayOrderCreator extends OrderCreator<Void> {
+    @Override
+    public Order createOrder(Void unused) {
+        return new TakeawayOrder();
+    }
+}
+```
+
+**Usage:**
+
+```java
+OrderCreator<Integer> dineInCreator = new DineInOrderCreator();
+Order dineInOrder = dineInCreator.processOrder(table.getId());
+dineInOrder.addItem(burger);
+```
+
+### Singleton Pattern Update
+
+The Restaurant singleton was also improved from eager to lazy initialization:
+
+```java
+public class Restaurant {
+    private static volatile Restaurant instance;  // volatile for thread safety
+
+    private Restaurant() { /* ... */ }
+
+    public static Restaurant getInstance() {
+        if (instance == null) {
+            synchronized (Restaurant.class) {  // double-checked locking
+                if (instance == null) {
+                    instance = new Restaurant();
+                }
+            }
+        }
+        return instance;
+    }
+}
+```

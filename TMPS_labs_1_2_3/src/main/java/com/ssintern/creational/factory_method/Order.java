@@ -47,11 +47,9 @@ public abstract class Order {
     public List<MenuItem> getItems() {
         return items;
     }
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\n========== Order #").append(id).append(" ==========\n");
 
+    protected String formatItems() {
+        StringBuilder sb = new StringBuilder();
         sb.append("\nItems:\n");
         if (items.isEmpty()) {
             sb.append("  (no items)\n");
@@ -66,9 +64,6 @@ public abstract class Order {
                 }
             }
         }
-
-        sb.append("\nTotal: $").append(String.format("%.2f", calculateTotal())).append("\n");
-        sb.append("================================\n");
         return sb.toString();
     }
 }
