@@ -34,9 +34,20 @@ public class TablePool {
     }
 
     public void releaseTable(Table table) {
-        if(table != null && tablesPool.size() < maxSize) {
+        if (table != null && tablesPool.size() < maxSize) {
             table.release();
             tablesPool.offer(table);
         }
+    }
+
+    public void setMaxPoolSize(int newMaxSize) {
+        if (newMaxSize <= 0) {
+            throw new IllegalArgumentException("Max pool size must be positive.");
+        }
+        this.maxSize = newMaxSize;
+    }
+
+    public int getMaxPoolSize() {
+        return maxSize;
     }
 }
