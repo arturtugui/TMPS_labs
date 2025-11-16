@@ -1,12 +1,11 @@
 package com.ssintern.creational.builderAlternative;
 
+import com.ssintern.structural.composite.MenuComponent;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class MenuItem implements Cloneable {
-    public static final AtomicInteger idCounter = new AtomicInteger(0);
-
+public class MenuItem implements Cloneable, MenuComponent {
     private int id;
     private String name;
     private String description;
@@ -14,7 +13,7 @@ public class MenuItem implements Cloneable {
     private List<String> ingredients;
 
     public MenuItem(MenuItemBuilder builder) {
-        setId(idCounter.incrementAndGet());
+        this.id = idCounter.incrementAndGet();
         this.name = builder.name;
         this.description = builder.description;
         this.price = builder.price;
@@ -88,6 +87,19 @@ public class MenuItem implements Cloneable {
                 ", price=" + price +
                 ", ingredients=" + ingredients +
                 '}';
+    }
+
+    @Override
+    public void display() {
+        display(0); // Default: no indentation
+    }
+
+    @Override
+    public void display(int depth) {
+        // MenuItem is a leaf - just print itself with indentation
+        String indent = "  ".repeat(depth);
+        System.out.println(indent + name + " - $" + price + " - " + description);
+        // No children to display - recursion stops here naturally!
     }
 
     public static class MenuItemBuilder {
