@@ -8,6 +8,7 @@ import com.ssintern.creational.builderAlternative.MenuItem;
 import com.ssintern.domain.models.Table;
 import com.ssintern.structural.composite.MenuCategory;
 import com.ssintern.structural.composite.MenuComponent;
+import com.ssintern.structural.decorator.ExtraIngredientDecorator;
 
 public class Demo {
     public static void main(String[] args) {
@@ -61,9 +62,25 @@ public class Demo {
         cheeseburger.addIngredient("Cheddar Cheese");
         cheeseburger.setPrice(9.99);
         burgersCategory.add(cheeseburger); // Add to category
-        System.out.println("Cloned and Customized Menu Item: " + cheeseburger.getName() + " - $" + cheeseburger.getPrice());
+        System.out.println(
+                "Cloned and Customized Menu Item: " + cheeseburger.getName() + " - $" + cheeseburger.getPrice());
 
         restaurant.displayMenu();
+
+        // Decorator - for adding extras dynamically - Structural DP
+        System.out.println("\n--- Customizing Order Items (Decorator Pattern) ---");
+        ExtraIngredientDecorator burgerWithExtraTomato = new ExtraIngredientDecorator(burger, "Extra Tomato", 2.0);
+        System.out.println(
+                "Decorated: " + burgerWithExtraTomato.getName() + " - $" + burgerWithExtraTomato.getModifiedItem().getPrice());
+        System.out.println("Ingredients: " + burgerWithExtraTomato.getModifiedItem().getIngredients());
+
+        // Chain decorators
+        ExtraIngredientDecorator burgerWithExtraTomatoAndLettuce = new ExtraIngredientDecorator(
+                burgerWithExtraTomato.getModifiedItem(), "Extra Lettuce", 1.0);
+        System.out.println("Decorated again: " + burgerWithExtraTomatoAndLettuce.getName() + " - $" +
+                burgerWithExtraTomatoAndLettuce.getModifiedItem().getPrice());
+        System.out.println("Ingredients: " + burgerWithExtraTomatoAndLettuce.getModifiedItem().getIngredients());
+        System.out.println();
 
         // Object Pool - for Tables Management - Creational DP
         System.out.println("--- Table Management (Object Pool Pattern) ---");
@@ -78,7 +95,7 @@ public class Demo {
         Order dineInOrder = dineInOrderCreator.createOrder(table1.getId());
 
         dineInOrder.addItem(cola);
-        dineInOrder.addItem(burger);
+        dineInOrder.addItem((MenuItem) burgerWithExtraTomatoAndLettuce.getModifiedItem()); // Add decorated item
         dineInOrder.addItem(cheeseburger);
 
         System.out.println(dineInOrder);

@@ -63,6 +63,11 @@ public class MenuItem implements Cloneable, MenuComponent {
         this.ingredients.add(ingredient);
     }
 
+    @Override
+    public MenuComponent createModifiedCopy() {
+        return this.clone(); // Uses Prototype pattern
+    }
+
     // for prototype CDP
     @Override
     public MenuItem clone() {

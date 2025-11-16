@@ -1,5 +1,6 @@
 package com.ssintern.structural.composite;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -29,5 +30,28 @@ public interface MenuComponent {
 
     default List<MenuComponent> getChildren() {
         throw new UnsupportedOperationException("Leaf components have no children");
+    }
+
+    // Ingredient-related operations - for MenuItem decoration
+    default List<String> getIngredients() {
+        return Collections.emptyList(); // Categories have no ingredients
+    }
+
+    default void addIngredient(String ingredient) {
+        throw new UnsupportedOperationException("Cannot add ingredients to this component");
+    }
+
+    // Price operations - for decoration and ordering
+    default double getPrice() {
+        return 0.0; // Default price for components without price
+    }
+
+    default void setPrice(double price) {
+        throw new UnsupportedOperationException("Cannot set price on this component");
+    }
+
+    // For creating modified copies (Prototype pattern integration)
+    default MenuComponent createModifiedCopy() {
+        throw new UnsupportedOperationException("Cannot create modified copy of this component");
     }
 }
