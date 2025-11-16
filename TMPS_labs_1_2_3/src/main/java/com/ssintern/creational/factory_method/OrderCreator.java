@@ -3,7 +3,7 @@ package com.ssintern.creational.factory_method;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class OrderCreator<T> {
-    public static final AtomicInteger idCounter = new AtomicInteger(0);
+    public static final AtomicInteger idCounter = new AtomicInteger(1);
 
     public abstract Order createOrder(T params);
 

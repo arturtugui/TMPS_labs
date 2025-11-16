@@ -7,11 +7,14 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Order {
+    private static final AtomicInteger orderIdCounter = new AtomicInteger(0);
+
     private int id;
     private List<MenuItem> items;
 
     // No-arg constructor for Builder pattern
     public Order() {
+        this.id = orderIdCounter.incrementAndGet(); // Auto-generate ID
         this.items = new ArrayList<>();
     }
 

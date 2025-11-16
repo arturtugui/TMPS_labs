@@ -2,6 +2,7 @@ package com.ssintern.creational.singleton;
 
 import com.ssintern.creational.builderAlternative.MenuItem;
 import com.ssintern.creational.pool.TablePool;
+import com.ssintern.structural.composite.MenuComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ public class Restaurant {
 
     private TablePool tablePool;
     private String name;
-    private List<MenuItem> menu;
+    private List<MenuComponent> menu;
 
     private Restaurant() {
         this.tablePool = new TablePool(5);
@@ -38,31 +39,19 @@ public class Restaurant {
         return name;
     }
 
-    public void addMenuItem(MenuItem item) {
-        menu.add(item);
-        System.out.println("Added to menu: " + item.getName());
+    public void addMenuComponent(MenuComponent component) {
+        menu.add(component);
     }
 
-    public List<MenuItem> getMenu() {
+    public List<MenuComponent> getMenu() {
         return new ArrayList<>(menu); // Return copy to protect encapsulation
     }
 
     public void displayMenu() {
-        System.out.println("\n========== " + name + " Menu ==========");
-        if (menu.isEmpty()) {
-            System.out.println("  (Menu is empty)");
-        } else {
-            for (int i = 0; i < menu.size(); i++) {
-                MenuItem item = menu.get(i);
-                System.out.println((i + 1) + ". " + item.getName() + " - $" +
-                        String.format("%.2f", item.getPrice()));
-                System.out.println("   " + item.getDescription());
-                if (item.getIngredients() != null && !item.getIngredients().isEmpty()) {
-                    System.out.println("   Ingredients: " + String.join(", ", item.getIngredients()));
-                }
-                System.out.println();
-            }
+        System.out.println("\n=== " + name + " Menu ===");
+        for (MenuComponent item : menu) {
+            item.display();
         }
-        System.out.println("========================================\n");
+        System.out.println("======================\n");
     }
 }
