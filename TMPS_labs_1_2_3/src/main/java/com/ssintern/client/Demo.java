@@ -1,10 +1,10 @@
 package com.ssintern.client;
 
-import com.ssintern.creational.builder.DineInOrderBuilder;
-import com.ssintern.creational.builder.OrderDirector;
+import com.ssintern.creational.factory_method.DineInOrderCreator;
+import com.ssintern.creational.factory_method.Order;
+import com.ssintern.creational.factory_method.OrderCreator;
 import com.ssintern.creational.singleton.Restaurant;
 import com.ssintern.creational.builderAlternative.MenuItem;
-import com.ssintern.domain.models.Order;
 import com.ssintern.domain.models.Table;
 
 public class Demo {
@@ -47,11 +47,9 @@ public class Demo {
         System.out.println();
 
         // Builder Pattern for Order
-        System.out.println("--- Creating Order (Builder Pattern) ---");
-        DineInOrderBuilder dineInOrderBuilder = new DineInOrderBuilder(table1);
-        OrderDirector orderDirector = new OrderDirector(dineInOrderBuilder);
-        orderDirector.constructOrder();
-        Order dineInOrder = orderDirector.getOrder();
+        System.out.println("--- Creating Order (Factory method Pattern) ---");
+        OrderCreator<Integer> dineInOrderCreator = new DineInOrderCreator();
+        Order dineInOrder = dineInOrderCreator.createOrder(table1.getId());
 
         dineInOrder.addItem(burger);
         dineInOrder.addItem(cheeseburger);

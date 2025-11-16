@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Restaurant {
-    private static final Restaurant instance = new Restaurant();
+    private static volatile Restaurant instance;
 
     private TablePool tablePool;
     private String name;
@@ -20,7 +20,14 @@ public class Restaurant {
     }
 
     public static Restaurant getInstance() {
-        return instance; // Always returns same instance
+        if (instance == null) {
+            synchronized (Restaurant.class) {
+                if (instance == null) {
+                    instance = new Restaurant();
+                }
+            }
+        }
+        return instance;
     }
 
     public TablePool getTablePool() {

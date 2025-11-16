@@ -1,4 +1,4 @@
-package com.ssintern.domain.models;
+package com.ssintern.creational.factory_method;
 
 import com.ssintern.creational.builderAlternative.MenuItem;
 
@@ -6,20 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Order {
-    public static final AtomicInteger idCounter = new AtomicInteger(0);
-
+public abstract class Order {
     private int id;
     private List<MenuItem> items;
-    private OrderType orderType;
-    // OPTIONAL
-    private Integer tableId; // applicable for DINE_IN orders
-    private String deliveryAddress; // applicable for DELIVERY orders
 
     // No-arg constructor for Builder pattern
     public Order() {
         this.items = new ArrayList<>();
     }
+
+    public abstract String getOrderDetails();
 
     public void addItem(MenuItem item) {
         this.items.add(item);
@@ -52,43 +48,8 @@ public class Order {
         return items;
     }
 
-    public void setOrderType(OrderType orderType) {
-        this.orderType = orderType;
-    }
-
-    public OrderType getOrderType() {
-        return orderType;
-    }
-
-    public void setTableId(Integer tableId) {
-        this.tableId = tableId;
-    }
-
-    public Integer getTableId() {
-        return tableId;
-    }
-
-    public void setDeliveryAddress(String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
-    }
-
-    public String getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    @Override
-    public String toString() {
+    protected String formatItems() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n========== Order #").append(id).append(" ==========\n");
-        sb.append("Type: ").append(orderType).append("\n");
-
-        if (tableId != null) {
-            sb.append("Table: ").append(tableId).append("\n");
-        }
-        if (deliveryAddress != null) {
-            sb.append("Delivery Address: ").append(deliveryAddress).append("\n");
-        }
-
         sb.append("\nItems:\n");
         if (items.isEmpty()) {
             sb.append("  (no items)\n");
@@ -103,9 +64,6 @@ public class Order {
                 }
             }
         }
-
-        sb.append("\nTotal: $").append(String.format("%.2f", calculateTotal())).append("\n");
-        sb.append("================================\n");
         return sb.toString();
     }
 }
